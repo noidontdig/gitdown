@@ -25,6 +25,16 @@ API_SECRET = "p8R3nxfAG9QvOUCoOPmZz25N5YEnufwSdPt7aJ6gQDgfkdzqds"
 OAUTH_TOKEN = "yyGjyA0zXPVSfccadcotOzjyTZchB3T8njx1hlDHx5Y7Mt8dup"
 OAUTH_TOKEN_SECRET = "MLcD5STnDdhXrmBoKTHFZCJlEEOsiLmFmqIgPXc5FwmNTkfVlH"
 
+IMAGES = ['http://www.societyofrobots.com/images/programming_PID_drunkdog.jpg',
+'http://24.media.tumblr.com/49863e872d499205a9960d87cdbc0e8e/tumblr_mkvzhgpYSS1s7qixko1_500.gif',
+'http://i.imgur.com/ueVZc.jpg',
+'http://3.bp.blogspot.com/-FYIrCemUVwY/TxWlcgw1J5I/AAAAAAAAAY8/NfOS5aiHyzA/s1600/beer-drinker.jpg',
+'http://25.media.tumblr.com/tumblr_ljgx4s9l4x1qipm4jo1_500.jpg',
+'http://img514.imageshack.us/img514/2074/drunk0124kj.jpg',
+'http://farm1.staticflickr.com/178/452713612_01ecbce27a_z.jpg']
+
+BALLER_IMAGE = 'http://scm-l3.technorati.com/11/01/31/25951/steve-ballmer.jpg'
+
 Tumblr.configure do |config|
   config.consumer_key = API_KEY
   config.consumer_secret = API_SECRET
@@ -64,8 +74,8 @@ data_bits = 8
 stop_bits = 1
 parity = SerialPort::NONE
 sp = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
-#Taking control of the serial port resets the Arduino.
-#Wait 4 seconds for it to start up and autocalibrate
+Taking control of the serial port resets the Arduino.
+Wait 4 seconds for it to start up and autocalibrate
 puts "Calibrating breathalyzer sensor..."
 sleep(4) 
 
@@ -74,11 +84,12 @@ sleep(5)
 
 puts "Blow blow blow!!!"
 
-# get bac from breathalizer
+get bac from breathalizer
 sp.write "a" #For the moment, the specific letter sent doesn't matter
 sleep(6)     #breathalyzer takes 5 seconds to measure, plus 1 for good measure
 bac = sp.gets.chomp.to_f / 100.0
-bac = 0.15
+
+#bac = 0.14
 puts "Your BAC is #{bac}%."
 
 commit_file = ARGV[0]
@@ -94,27 +105,48 @@ when "normal"
     exit 0
   end
 when "krunk"
-  if bac <= NORMAL
+  if bac < NORMAL
     puts "You are not drunk enough"
     exit 1
   else
     client = Tumblr::Client.new
     puts "You are drunk! Good job"
-    drunk_message = ""
+    name = `git config user.name`
+    now = DateTime.now
+    date = now.strftime("%B %e, %l:%M%p")
+    title = "#{name} - #{date} - BAC: #{bac}%"
+    drunk_message = "<p><strong>#{title}</strong>:</p> <p>\""
+    new_commit = ""
     message.each_char do |c|
       if VOWELS.include?(c)
-        drunk_message += c * Random.rand(2..5)
+        new_commit += c * Random.rand(2..5)
       else
-        drunk_message += c
+        new_commit += c
       end
     end
-    File.open(commit_file, 'w') { |f| f.write(drunk_message) }
-    puts post = client.text(TUMBLRHOST, body: drunk_message)
+    drunk_message += "#{new_commit}\"</p>"
+    img_url = IMAGES[Random.rand(IMAGES.count - 1)]
+    drunk_message += "<img src=#{img_url}>"
+    File.open(commit_file, 'w') { |f| f.write(new_commit) }
+    post = client.text(TUMBLRHOST, body: drunk_message)
     exit 0
   end
 when "baller"
   if bac >= BALLMER_MIN && bac <= BALLMER_MAX
     puts "You are at the ballmer peak. Awesome!"
+    client = Tumblr::Client.new
+    puts "You are drunk! Good job"
+    name = `git config user.name`
+    now = DateTime.now
+    date = now.strftime("%B %e, %l:%M%p")
+    title = "#{name} (Ballin') - #{date} - BAC: #{bac}%"
+    drunk_message = "<p><strong>#{title}</strong>:</p> <p>\""
+    new_commit = "HITTING THE BALLMER PEAK YO #{message}augifeoifh" 
+    drunk_message += "#{new_commit}\"</p>"
+    img_url = BALLER_IMAGE
+    drunk_message += "<img src=#{img_url}>"
+    File.open(commit_file, 'w') { |f| f.write(new_commit) }
+    post = client.text(TUMBLRHOST, body: drunk_message)
     exit 0
   else
     puts "You are not at your ballmer peak"
@@ -124,4 +156,3 @@ else
   puts "Incorrect mode, check .gitdown file for examples"
   exit 1
 end
-
