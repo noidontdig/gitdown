@@ -55,8 +55,7 @@ void loop()
       
       //these two lines will be changed once we figure out some calibration
       //val should be getReading, and light bars set accordingly
-      //reading = ds.getReading();
-      reading = analogRead(0);
+      reading = ds.getReading();
       bac = reading / BAC_COEF;
       
       ds.lightBarLevel(min(bac, 11), 0);

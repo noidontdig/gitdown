@@ -78,6 +78,7 @@ puts "Blow blow blow!!!"
 sp.write "a" #For the moment, the specific letter sent doesn't matter
 sleep(6)     #breathalyzer takes 5 seconds to measure, plus 1 for good measure
 bac = sp.gets.chomp.to_f / 100.0
+bac = 0.15
 puts "Your BAC is #{bac}%."
 
 commit_file = ARGV[0]
@@ -123,5 +124,4 @@ else
   puts "Incorrect mode, check .gitdown file for examples"
   exit 1
 end
-
 
