@@ -12,7 +12,7 @@
 //This is the ratio of sensor reading to (BAC% * 10) as integer.
 //For example, BAC_COEF of 2 means a reading of 4 returns 2 to the computer,
 //which corresponds to 0.02% BAC
-const float BAC_COEF = 30; //for now, no calibration
+const float BAC_COEF = 10; //for now, no calibration
 
 unsigned long time;
 
