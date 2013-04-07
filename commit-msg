@@ -1,0 +1,85 @@
+#!/usr/bin/env ruby
+#
+# An example hook script to check the commit log message.
+# Called by "git commit" with one argument, the name of the file
+# that has the commit message.  The hook should exit with non-zero
+# status after issuing an appropriate message if it wants to stop the
+# commit.  The hook is allowed to edit the commit message file.
+#
+# To enable this hook, rename this file to "commit-msg".
+
+# Uncomment the below to add a Signed-off-by line to the message.
+# Doing this in a hook is a bad idea in general, but the prepare-commit-msg
+# hook is more suited to it.
+#
+# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
+
+# This example catches duplicate Signed-off-by lines.
+
+#test "" = "$(grep '^Signed-off-by: ' "$1" |
+#	 sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
+#	echo >&2 Duplicate Signed-off-by lines.
+#	exit 1
+#}
+
+
+CONFIG = ".gitdown"
+
+NORMAL_MODE = 1
+KRUNK_MODE = 2
+BALLMER_MODE = 3
+
+NORMAL = 5
+BALLMER = 14
+KRUNK = 20
+
+mode = ""
+if File.exist?(CONFIG)
+  File.open(CONFIG).each do |line|
+    if line =~ /^mode.*/
+      mode = line.split[1].to_i
+    end
+  end
+else
+  puts "No .gitdown file found"
+end
+
+# get bac from breathalizer
+
+bac = 10
+
+
+commit_file = ARGV[0]
+message = File.read(commit_file).strip
+puts message
+puts mode
+
+case mode
+when NORMAL_MODE
+  if bac > NORMAL
+    puts "You are too drunk"
+    exit 1
+  else 
+    puts "You are sober. Good job"
+    exit 0
+  end
+when KRUNK_MODE
+  if bac < KRUNK
+    puts "You are not drunk enough"
+    exit 1
+  else
+    puts "You are drunk! Good job"
+    exit 0
+  end
+when BALLMER_MODE
+  if bac == BALLMER
+    puts "You are at the ballmer peak. Awesome!"
+    exit 0
+  else
+    puts "You are not at your ballmer peak"
+    exit 1
+  end
+else
+  puts "Incorrect mode"
+end
