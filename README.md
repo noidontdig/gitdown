@@ -1,6 +1,8 @@
 gitdown
 =======
-__gitdown__ is a git hook which moderates your git committing activity based on your blood alcohol content (BAC).
+__gitdown__ is a git hook which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://www.gfxhax.com/drinkshield/) for Arduino as a breathalyzer.
+
+It was built for hackNY spring 2013 by Alex Qin and Geoffrey Litt.
 
 Usage
 -----
@@ -25,3 +27,9 @@ Then, you can try editing a file in the gitdown repo and committing the change, 
     git commit -a -m "messing up the repo"
 
 Depending on the active mode and your BAC, the script will either permit you to or prevent you from committing!
+
+Modes
+------
+- __Normal mode__: Only lets you commit with a BAC of less than 0.05%.
+- __Krunk mode__: Only lets you commit with a BAC of __greater__ than 0.05%.
+- __Ball(m)er mode__: Only lets you commit with a BAC of [between 0.13% and 0.15%](http://xkcd.com/323/).
