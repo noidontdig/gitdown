@@ -4,6 +4,7 @@
 
 require "serialport"
 require 'io/console'
+require 'tumblr_client'
 
 CONFIG = ".gitdown"
 
@@ -17,6 +18,21 @@ mode_descriptions = {"normal" => "You best not be tipsy. Not even one bit.",
                      "baller" => "BALL(m)ER PEAK: A narrow spike of blood alcohol content (0.13% - 0.15%) leading to high programming productivity.",
                      "math" => "A hobbled mode for those who haven't acquired their DrinkShield yet. Answer math problems to gain commit privileges."}
 
+VOWELS = ['a', 'e', 'i', 'u', 'o', 'y', 'A', 'E', 'I', 'O', 'U', 'Y']
+
+TUMBLRHOST = "gitdownhackny.tumblr.com"
+API_KEY = "ZDJOwTnJd3SnXlGWjo8NyFORqcyc7wyjg0pAMIAHO2shdw9S6N"
+API_SECRET = "p8R3nxfAG9QvOUCoOPmZz25N5YEnufwSdPt7aJ6gQDgfkdzqds"
+USERNAME = 'gitdownhackny@gmail.com'
+PASSWORD = 'hackny2013'
+
+Tumblr.configure do |config|
+  config.consumer_key = API_KEY
+  config.consumer_secret = API_SECRET
+  config.oauth_token = API_KEY
+  config.oauth_token_secret = API_SECRET
+end
+
 mode = ""
 if File.exist?(CONFIG)
   File.open(CONFIG).each do |line|
@@ -26,6 +42,7 @@ if File.exist?(CONFIG)
   end
 else
   puts "No .gitdown file found"
+  exit 1
 end
 
 puts "----------------  Time to GITDOWN!!!  ----------------"
@@ -59,13 +76,10 @@ else
   bac = sp.gets.chomp.to_f / 100.0
   bac = 0.14
   puts "Your BAC is #{bac}%."
-
 end
 
 commit_file = ARGV[0]
-message = File.read(commit_file).strip.downcase
-puts message
-puts mode
+message = File.read(commit_file).strip
 
 case mode
 when "normal"
@@ -77,11 +91,27 @@ when "normal"
     exit 0
   end
 when "krunk"
-  if bac < KRUNK
+  if bac < NORMAL
     puts "You are not drunk enough"
     exit 1
   else
+    client = Tumblr::Client.new
+    # user = Tumblr::User.new(USERNAME, PASSWORD)
     puts "You are drunk! Good job"
+    drunk_message = ""
+    message.each_char do |c|
+      if VOWELS.include?(c)
+        drunk_message += c * Random.rand(2..5)
+      else
+        drunk_message += c
+      end
+    end
+    File.open(commit_file, 'w') { |f| f.write(drunk_message) }
+    post = client.text(TUMBLRHOST, body: drunk_message)
+    posts = client.posts(TUMBLRHOST)
+    # Tumblr::Post.create(email: USERNAME, password: PASSWORD, title: 'test', body: drunk_message)
+    puts post
+    puts posts
     exit 0
   end
 when "baller"
@@ -95,7 +125,6 @@ when "baller"
 when "math"
   num1 = Random.rand(30..60)
   num2 = Random.rand(30..60)
-
   puts "What is #{num1}+#{num2}?"
   if(STDIN.gets.to_i == (num1 + num2))
     puts "Good job! You're sober enough to do math!"
@@ -106,4 +135,5 @@ when "math"
   end
 else
   puts "Incorrect mode, check .gitdown file for examples"
+  exit 1
 end
