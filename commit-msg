@@ -50,8 +50,7 @@ puts "You are in #{mode.upcase} mode."
 puts mode_descriptions[mode]
 puts "------------------------------------------------------"
 
-if mode == "math"
-else
+unless mode == "math"
   #Serial port init variables
   port_str = "/dev/tty.usbmodem1421"  #set to Arduino USB port, can be checked in Arduino IDE
   baud_rate = 9600
@@ -80,7 +79,6 @@ end
 
 commit_file = ARGV[0]
 message = File.read(commit_file).strip
-puts "Your commit message: \"" + message + "\""
 
 case mode
 when "normal"
