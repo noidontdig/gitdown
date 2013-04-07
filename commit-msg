@@ -24,6 +24,7 @@
 #}
 
 require "serialport"
+require 'io/console'
 
 CONFIG = ".gitdown"
 
@@ -44,9 +45,10 @@ parity = SerialPort::NONE
 sp = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
 #Taking control of the serial port resets the Arduino.
 #Wait 4 seconds for it to start up and autocalibrate
-puts "Initializing Arduino connection..."
+puts "Calibrating breathalyzer sensor..."
 sleep(4) 
 
+STDIN.iflush
 print "Prepare to blow into the breathalyzer! Press ENTER when ready."
 STDIN.gets #wait for enter key
 
