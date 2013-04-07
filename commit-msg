@@ -79,7 +79,7 @@ message = File.read(commit_file).strip
 
 case mode
 when "normal"
-  if bac > NORMAL
+  if bac <= NORMAL
     puts "You are too drunk"
     exit 1
   else 
@@ -87,7 +87,7 @@ when "normal"
     exit 0
   end
 when "krunk"
-  if bac < NORMAL
+  if bac > NORMAL
     puts "You are not drunk enough"
     exit 1
   else
