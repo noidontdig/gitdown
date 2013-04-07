@@ -18,9 +18,10 @@ To use the script as a hook for the gitdown repo itself, copy it to the proper l
 
 Using this project requires an Arduino Uno with the [DrinkShield](http://www.gfxhax.com/drinkshield/) attachment. Open the `arduino_gitdown/arduino_gitdown.ino` file with the Arduino IDE and load it onto the Arduino.
 
-Then, open the `.gitdown` config file and edit the two configuration parameters:
+Then, open the `.gitdown` config file and edit the three configuration parameters:
 - __mode__: This should be set to either "normal", "krunk", or "baller", corresponding to the modes described below.
 - __port__: This should be the device name of the Arduino's USB connection on your machine. This can be found from the Arduino IDE's "Serial Port" Menu. The default value is `/dev/tty.usbmodem1421`, which happened to work on the Macbook Air used for development.
+- __verbose__: Set to "true" or "false", depending on whether you want the system to output helpful information about your current BAC level.
 
 Then, you can try editing a file in the gitdown repo and committing the change, to see the script in action.
 
