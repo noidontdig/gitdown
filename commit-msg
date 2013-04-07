@@ -28,9 +28,10 @@ else
   puts "No .gitdown file found"
 end
 
-puts "--- Time to GITDOWN!!! ---"
+puts "----------------  Time to GITDOWN!!!  ----------------"
 puts "You are in #{mode.upcase} mode."
 puts mode_descriptions[mode]
+puts "------------------------------------------------------"
 
 if mode == "math"
 else
@@ -97,7 +98,7 @@ when "math"
 
   puts "What is #{num1}+#{num2}?"
   if(STDIN.gets.to_i == (num1 + num2))
-    puts "Good job! You don't suck at math."
+    puts "Good job! You're sober enough to do math!"
     exit 0
   else
     puts "You suck at math."
