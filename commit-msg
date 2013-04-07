@@ -23,14 +23,14 @@ VOWELS = ['a', 'e', 'i', 'u', 'o', 'y', 'A', 'E', 'I', 'O', 'U', 'Y']
 TUMBLRHOST = "gitdownhackny.tumblr.com"
 API_KEY = "ZDJOwTnJd3SnXlGWjo8NyFORqcyc7wyjg0pAMIAHO2shdw9S6N"
 API_SECRET = "p8R3nxfAG9QvOUCoOPmZz25N5YEnufwSdPt7aJ6gQDgfkdzqds"
-USERNAME = 'gitdownhackny@gmail.com'
-PASSWORD = 'hackny2013'
+OAUTH_TOKEN = "yyGjyA0zXPVSfccadcotOzjyTZchB3T8njx1hlDHx5Y7Mt8du"
+OAUTH_TOKEN_SECRET = "MLcD5STnDdhXrmBoKTHFZCJlEEOsiLmFmqIgPXc5FwmNTkfVlH"
 
 Tumblr.configure do |config|
   config.consumer_key = API_KEY
   config.consumer_secret = API_SECRET
-  config.oauth_token = API_KEY
-  config.oauth_token_secret = API_SECRET
+  config.oauth_token = OAUTH_TOKEN
+  config.oauth_token_secret = OAUTH_TOKEN_SECRET
 end
 
 mode = ""
@@ -95,7 +95,6 @@ when "krunk"
     exit 1
   else
     client = Tumblr::Client.new
-    # user = Tumblr::User.new(USERNAME, PASSWORD)
     puts "You are drunk! Good job"
     drunk_message = ""
     message.each_char do |c|
@@ -106,11 +105,7 @@ when "krunk"
       end
     end
     File.open(commit_file, 'w') { |f| f.write(drunk_message) }
-    post = client.text(TUMBLRHOST, body: drunk_message)
-    posts = client.posts(TUMBLRHOST)
-    # Tumblr::Post.create(email: USERNAME, password: PASSWORD, title: 'test', body: drunk_message)
-    puts post
-    puts posts
+    puts post = client.text(TUMBLRHOST, body: drunk_message)
     exit 0
   end
 when "baller"
