@@ -73,7 +73,6 @@ puts "Prepare to blow into the breathalyzer! Breathalyzing starting in 5 seconds
 sleep(5)
 
 puts "Blow blow blow!!!"
-rando
 
 # get bac from breathalizer
 sp.write "a" #For the moment, the specific letter sent doesn't matter
