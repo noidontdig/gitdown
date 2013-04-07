@@ -2,7 +2,7 @@ gitdown
 =======
 __gitdown__ is a git hook which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://www.gfxhax.com/drinkshield/) for Arduino as a breathalyzer.
 
-It was built for hackNY spring 2013 by Alex Qin and Geoffrey Litt.
+It was built for hackNY spring 2013 by Alex Qin and Geoffrey Litt, and won first place there. 
 
 Usage
 -----
