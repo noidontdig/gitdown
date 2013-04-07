@@ -1,4 +1,4 @@
-# !/usr/bin/env ruby
+#!/usr/bin/env ruby
 #
 # Git hook for breathalyzing before commmitting
 
@@ -7,56 +7,67 @@ require 'io/console'
 
 CONFIG = ".gitdown"
 
-NORMAL_MODE = 1
-KRUNK_MODE = 2
-BALLMER_MODE = 3
+NORMAL = 0.05
+BALLMER_MIN = 0.13
+BALLMER_MAX = 0.15
+KRUNK = 0.18
 
-NORMAL = 5
-BALLMER = 14
-KRUNK = 20
-
-#Serial port init variables
-port_str = "/dev/tty.usbmodem1421"  #set to Arduino USB port, can be checked in Arduino IDE
-baud_rate = 9600
-data_bits = 8
-stop_bits = 1
-parity = SerialPort::NONE
-sp = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
-#Taking control of the serial port resets the Arduino.
-#Wait 4 seconds for it to start up and autocalibrate
-puts "Calibrating breathalyzer sensor..."
-sleep(4) 
-
-STDIN.iflush
-print "Prepare to blow into the breathalyzer! Press ENTER when ready."
-STDIN.gets #wait for enter key
-
-puts "Blow blow blow!!!"
+mode_descriptions = {"normal" => "You best not be tipsy. Not even one bit.", 
+                     "krunk" => "If you ain't WASTED, you ain't COMMITTIN'",
+                     "baller" => "BALL(m)ER PEAK: A narrow spike of blood alcohol content (0.13% - 0.15%) leading to high programming productivity.",
+                     "math" => "A hobbled mode for those who haven't acquired their DrinkShield yet. Answer math problems to gain commit privileges."}
 
 mode = ""
 if File.exist?(CONFIG)
   File.open(CONFIG).each do |line|
     if line =~ /^mode.*/
-      mode = line.split[1].to_i
+      mode = line.split(':')[1].strip
     end
   end
 else
   puts "No .gitdown file found"
 end
 
-# get bac from breathalizer
-sp.write "a" #For the moment, the specific letter sent doesn't matter
-sleep(6)     #breathalyzer takes 5 seconds to measure, plus 1 for good measure
-bac = sp.gets.chomp.to_f / 100.0
-puts "Your BAC is #{bac}%."
+puts "--- Time to GITDOWN!!! ---"
+puts "You are in #{mode.upcase} mode."
+puts mode_descriptions[mode]
+
+if mode == "math"
+else
+  #Serial port init variables
+  port_str = "/dev/tty.usbmodem1421"  #set to Arduino USB port, can be checked in Arduino IDE
+  baud_rate = 9600
+  data_bits = 8
+  stop_bits = 1
+  parity = SerialPort::NONE
+  sp = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
+  #Taking control of the serial port resets the Arduino.
+  #Wait 4 seconds for it to start up and autocalibrate
+  puts "Calibrating breathalyzer sensor..."
+  sleep(4) 
+
+  STDIN.iflush
+  print "Prepare to blow into the breathalyzer! Press ENTER when ready."
+  STDIN.gets #wait for enter key
+
+  puts "Blow blow blow!!!"
+
+  # get bac from breathalizer
+  sp.write "a" #For the moment, the specific letter sent doesn't matter
+  sleep(6)     #breathalyzer takes 5 seconds to measure, plus 1 for good measure
+  bac = sp.gets.chomp.to_f / 100.0
+  bac = 0.14
+  puts "Your BAC is #{bac}%."
+
+end
 
 commit_file = ARGV[0]
-message = File.read(commit_file).strip
+message = File.read(commit_file).strip.downcase
 puts message
 puts mode
 
 case mode
-when NORMAL_MODE
+when "normal"
   if bac > NORMAL
     puts "You are too drunk"
     exit 1
@@ -64,7 +75,7 @@ when NORMAL_MODE
     puts "You are sober. Good job"
     exit 0
   end
-when KRUNK_MODE
+when "krunk"
   if bac < KRUNK
     puts "You are not drunk enough"
     exit 1
@@ -72,14 +83,26 @@ when KRUNK_MODE
     puts "You are drunk! Good job"
     exit 0
   end
-when BALLMER_MODE
-  if bac == BALLMER
+when "baller"
+  if bac >= BALLMER_MIN && bac <= BALLMER_MAX
     puts "You are at the ballmer peak. Awesome!"
     exit 0
   else
     puts "You are not at your ballmer peak"
     exit 1
   end
+when "math"
+  num1 = Random.rand(30..60)
+  num2 = Random.rand(30..60)
+
+  puts "What is #{num1}+#{num2}?"
+  if(STDIN.gets.to_i == (num1 + num2))
+    puts "Good job! You don't suck at math."
+    exit 0
+  else
+    puts "You suck at math."
+    exit 1
+  end
 else
-  puts "Incorrect mode"
+  puts "Incorrect mode, check .gitdown file for examples"
 end
