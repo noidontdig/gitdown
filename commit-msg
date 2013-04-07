@@ -62,7 +62,7 @@ sp = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
 puts "Calibrating breathalyzer sensor..."
 sleep(4) 
 
-print "Prepare to blow into the breathalyzer! Breathalyzing starting in 5 seconds..."
+puts "Prepare to blow into the breathalyzer! Breathalyzing starting in 5 seconds..."
 sleep(5)
 
 puts "Blow blow blow!!!"
