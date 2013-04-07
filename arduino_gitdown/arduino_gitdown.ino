@@ -65,7 +65,7 @@ void loop()
       //these two lines will be changed once we figure out some calibration
       //val should be getReading, and light bars set accordingly
       reading = analogRead(0);
-      ds.lightBarLevel(reading, 0);
+      ds.lightBarLevel(max(reading, 10), 0);
 
       //overwrite the max reading if necessary
       if(reading > max_reading){
