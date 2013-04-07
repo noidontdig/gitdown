@@ -47,7 +47,7 @@ sp = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
 puts "Initializing Arduino connection..."
 sleep(4) 
 
-puts "Prepare to blow into the breathalyzer! Press ENTER when ready."
+print "Prepare to blow into the breathalyzer! Press ENTER when ready."
 STDIN.gets #wait for enter key
 
 puts "Blow blow blow!!!"
@@ -65,9 +65,9 @@ end
 
 # get bac from breathalizer
 sp.write "a" #For the moment, the specific letter sent doesn't matter
-sleep(8)     #breathalyzer takes 2 seconds to calibrate and 5 seconds to measure
-bac = sp.gets.chomp.to_i
-puts "Your BAC is #{bac}."
+sleep(6)     #breathalyzer takes 5 seconds to measure, plus 1 for good measure
+bac = sp.gets.chomp.to_f / 100.0
+puts "Your BAC is #{bac}%."
 
 commit_file = ARGV[0]
 message = File.read(commit_file).strip
