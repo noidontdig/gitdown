@@ -18,3 +18,5 @@ _yardoc
 doc/
 
 .gitdown
+*.swp
+*.swo
