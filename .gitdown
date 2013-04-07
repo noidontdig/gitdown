@@ -1,6 +1,4 @@
 # config file for gitdown
-# mode 1 - normal
-#      2 - gitkrunk
-#      3 - gitshitdone (ballmer peak)
+# possible modes: "normal", "krunk", "baller", "math"
 
-mode: 2
+mode: normal
