@@ -10,11 +10,11 @@ require 'tumblr_client'
 
 CONFIG = ".gitdown"
 
-dsfjlkasdk
 NORMAL = 0.05
 BALLMER_MIN = 0.13
 BALLMER_MAX = 0.15
 KRUNK = 0.18
+jdsfk
 
 mode_descriptions = {"normal" => "You best not be tipsy. Not even one bit.", 
                      "krunk" => "If you ain't WASTED, you ain't COMMITTIN'",
