@@ -158,9 +158,7 @@ when "krunk"
   end
 when "baller"
   if bac >= BALLMER_MIN && bac <= BALLMER_MAX
-    puts "You are at the ballmer peak. Awesome!"
     client = Tumblr::Client.new
-    puts "You are drunk! Good job"
     name = `git config user.name`
     now = DateTime.now
     date = now.strftime("%B %e, %l:%M%p")
@@ -172,9 +170,12 @@ when "baller"
     drunk_message += "<img src=#{img_url}>"
     File.open(commit_file, 'w') { |f| f.write(new_commit) }
     post = client.text(TUMBLRHOST, body: drunk_message)
+    puts "You are at the Ballmer peak. Awesome!"
+    puts "COMMIT SUCCESS"
     exit 0
   else
-    puts "You are not at your ballmer peak"
+    puts "You're not at the Ballmer peak...get between 0.13% and 0.15% to get in the zone!"
+    puts "COMMIT ABORTED"
     exit 1
   end
 else
