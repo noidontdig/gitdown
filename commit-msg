@@ -2,12 +2,15 @@
 #
 # Git hook for breathalyzing before commmitting
 
+exec("exec < /dev/tty")
+
 require "serialport"
 require 'io/console'
 require 'tumblr_client'
 
 CONFIG = ".gitdown"
 
+dsfjlkasdk
 NORMAL = 0.05
 BALLMER_MIN = 0.13
 BALLMER_MAX = 0.15
