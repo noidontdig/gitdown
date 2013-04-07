@@ -23,6 +23,7 @@
 #	exit 1
 #}
 
+require "serialport"
 
 CONFIG = ".gitdown"
 
@@ -33,6 +34,23 @@ BALLMER_MODE = 3
 NORMAL = 5
 BALLMER = 14
 KRUNK = 20
+
+#Serial port init variables
+port_str = "/dev/tty.usbmodem1421"  #set to Arduino USB port, can be checked in Arduino IDE
+baud_rate = 9600
+data_bits = 8
+stop_bits = 1
+parity = SerialPort::NONE
+sp = SerialPort.new(port_str, baud_rate, data_bits, stop_bits, parity)
+#Taking control of the serial port resets the Arduino.
+#Wait 4 seconds for it to start up and autocalibrate
+puts "Initializing Arduino connection..."
+sleep(4) 
+
+puts "Prepare to blow into the breathalyzer! Press ENTER when ready."
+STDIN.gets #wait for enter key
+
+puts "Blow blow blow!!!"
 
 mode = ""
 if File.exist?(CONFIG)
@@ -46,9 +64,10 @@ else
 end
 
 # get bac from breathalizer
-
-bac = 10
-
+sp.write "a" #For the moment, the specific letter sent doesn't matter
+sleep(8)     #breathalyzer takes 2 seconds to calibrate and 5 seconds to measure
+bac = sp.gets.chomp.to_i
+puts "Your BAC is #{bac}."
 
 commit_file = ARGV[0]
 message = File.read(commit_file).strip

@@ -40,21 +40,6 @@ void loop()
       Serial.read();
     }
     
-
-    ds.autocalibrate(20); 
-    
-    //enable the lines below if we don't want to autocalibrate before each reading
-    /*
-    for(int i = 0; i < 20; i++){
-      if(i % 2)
-        ds.setPlayerLights(OFF, OFF);
-      else
-        ds.setPlayerLights(ON, ON);
-      
-      delay(100);
-    }
-    */
-    
     ds.greenLight(ON);
     ds.redLight(OFF);
     
@@ -65,7 +50,7 @@ void loop()
       //these two lines will be changed once we figure out some calibration
       //val should be getReading, and light bars set accordingly
       reading = analogRead(0);
-      ds.lightBarLevel(max(reading, 10), 0);
+      ds.lightBarLevel(min(reading, 10), 0);
 
       //overwrite the max reading if necessary
       if(reading > max_reading){
