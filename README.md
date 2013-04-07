@@ -6,8 +6,8 @@ Usage
 -----
 First, clone the repo:
 
-  git clone https://github.com/noidontdig/gitdown.git
-  cd gitdown
+    git clone https://github.com/noidontdig/gitdown.git
+    cd gitdown
 
 Using this project requires an Arduino Uno with the [DrinkShield](http://www.gfxhax.com/drinkshield/) attachment. Open the `arduino_gitdown/arduino_gitdown.ino` file with the Arduino IDE and load it onto the Arduino.
 
@@ -17,11 +17,11 @@ __port__: This should be the device name of the Arduino's USB connection on your
 
 Run the setup script, which simply copies the script into the proper location to be a git hook for the gitdown repo:
 
-  ./setup
+    ./setup
 
 Then, you can try editing a file in the gitdown repo and committing the change, to see the script in action.
 
-  echo "random change" >> commit-msg
-  git commit -a -m "messing up the repo"
+    echo "random change" >> commit-msg
+    git commit -a -m "messing up the repo"
 
 Depending on the active mode and your BAC, the script will either permit you to or prevent you from committing!
