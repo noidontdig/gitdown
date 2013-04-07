@@ -80,6 +80,7 @@ end
 
 commit_file = ARGV[0]
 message = File.read(commit_file).strip
+puts "Your commit message: \"" + message + "\""
 
 case mode
 when "normal"
