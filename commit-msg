@@ -11,7 +11,6 @@ CONFIG = ".gitdown"
 NORMAL = 0.05
 BALLMER_MIN = 0.13
 BALLMER_MAX = 0.15
-KRUNK = 0.18
 
 mode_descriptions = {"normal" => "You best not be tipsy. Not even one bit.", 
                      "krunk" => "If you ain't WASTED, you ain't COMMITTIN'",
@@ -23,7 +22,7 @@ VOWELS = ['a', 'e', 'i', 'u', 'o', 'y', 'A', 'E', 'I', 'O', 'U', 'Y']
 TUMBLRHOST = "gitdownhackny.tumblr.com"
 API_KEY = "ZDJOwTnJd3SnXlGWjo8NyFORqcyc7wyjg0pAMIAHO2shdw9S6N"
 API_SECRET = "p8R3nxfAG9QvOUCoOPmZz25N5YEnufwSdPt7aJ6gQDgfkdzqds"
-OAUTH_TOKEN = "yyGjyA0zXPVSfccadcotOzjyTZchB3T8njx1hlDHx5Y7Mt8du"
+OAUTH_TOKEN = "yyGjyA0zXPVSfccadcotOzjyTZchB3T8njx1hlDHx5Y7Mt8dup"
 OAUTH_TOKEN_SECRET = "MLcD5STnDdhXrmBoKTHFZCJlEEOsiLmFmqIgPXc5FwmNTkfVlH"
 
 Tumblr.configure do |config|
@@ -79,7 +78,6 @@ puts "Blow blow blow!!!"
 sp.write "a" #For the moment, the specific letter sent doesn't matter
 sleep(6)     #breathalyzer takes 5 seconds to measure, plus 1 for good measure
 bac = sp.gets.chomp.to_f / 100.0
-bac = 0.14
 puts "Your BAC is #{bac}%."
 
 commit_file = ARGV[0]
@@ -87,7 +85,7 @@ message = File.read(commit_file).strip
 
 case mode
 when "normal"
-  if bac <= NORMAL
+  if bac > NORMAL
     puts "You are too drunk"
     exit 1
   else 
@@ -95,7 +93,7 @@ when "normal"
     exit 0
   end
 when "krunk"
-  if bac > NORMAL
+  if bac <= NORMAL
     puts "You are not drunk enough"
     exit 1
   else
