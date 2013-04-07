@@ -1,4 +1,4 @@
 # config file for gitdown
 # possible modes: "normal", "krunk", "baller", "math"
 
-mode: normal
+mode: krunk
