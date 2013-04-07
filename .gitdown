@@ -1,4 +1,8 @@
 # config file for gitdown
-# possible modes: "normal", "krunk", "baller", "math"
 
+# possible modes: "normal", "krunk", "baller", "math"
 mode: krunk
+
+# change this to the device name of your Arduino's USB connection
+# (this can be found easily in the Arduino IDE)
+port: /dev/tty.usbmodem1421

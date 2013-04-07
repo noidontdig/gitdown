@@ -34,14 +34,23 @@ Tumblr.configure do |config|
 end
 
 mode = ""
+port_str = ""
 if File.exist?(CONFIG)
   File.open(CONFIG).each do |line|
     if line =~ /^mode.*/
       mode = line.split(':')[1].strip
+    elsif line =~ /^port.*/
+      port_str = line.split(':')[1].strip
     end
   end
 else
   puts "No .gitdown file found"
+  exit 1
+end
+
+if mode.empty? or port_str.empty?
+  puts ".gitdown file contains errors."
+  puts "Make sure it contains a mode and port."
   exit 1
 end
 
@@ -51,7 +60,6 @@ puts mode_descriptions[mode]
 puts "------------------------------------------------------"
 
 #Serial port init variables
-port_str = "/dev/tty.usbmodem1421"  #set to Arduino USB port, can be checked in Arduino IDE
 baud_rate = 9600
 data_bits = 8
 stop_bits = 1
@@ -66,7 +74,6 @@ puts "Prepare to blow into the breathalyzer! Breathalyzing starting in 5 seconds
 sleep(5)
 
 puts "Blow blow blow!!!"
-fsd
 
 # get bac from breathalizer
 sp.write "a" #For the moment, the specific letter sent doesn't matter
