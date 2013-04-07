@@ -44,12 +44,19 @@ end
 
 mode = ""
 port_str = ""
+verbose = false
 if File.exist?(CONFIG)
   File.open(CONFIG).each do |line|
     if line =~ /^mode.*/
       mode = line.split(':')[1].strip
     elsif line =~ /^port.*/
       port_str = line.split(':')[1].strip
+    elsif line =~ /^verbose.*/
+      if line.split(':')[1].strip.downcase == 'true'
+        verbose = true
+      else
+        verbose = false
+      end
     end
   end
 else
@@ -79,8 +86,8 @@ Wait 4 seconds for it to start up and autocalibrate
 puts "Calibrating breathalyzer sensor..."
 sleep(4) 
 
-puts "Prepare to blow into the breathalyzer! Breathalyzing starting in 5 seconds..."
-sleep(5)
+puts "Prepare to blow into the breathalyzer! Breathalyzing starting in 3 seconds..."
+sleep(3)
 
 puts "Blow blow blow!!!"
 
@@ -88,9 +95,23 @@ get bac from breathalizer
 sp.write "a" #For the moment, the specific letter sent doesn't matter
 sleep(6)     #breathalyzer takes 5 seconds to measure, plus 1 for good measure
 bac = sp.gets.chomp.to_f / 100.0
-
-#bac = 0.14
-puts "Your BAC is #{bac}%."
+bac = 0.15
+puts "\nYour BAC is: #{bac}%.\n"
+if verbose
+  puts "BAC Effect Analysis:"
+  if bac < 0.03
+    puts "At this BAC, the average individual appears normal."
+  elsif bac >= 0.03 and bac < 0.06
+    puts "At this BAC, you are experiencing mild euphoria, relaxation, and talkativeness. Concentration is impaired."
+  elsif bac >= 0.06 and bac < 0.09
+    puts "At this BAC, you are experiencing disinhibition and extroversion. Reasoning, depth perception, and peripheral vision are impaired."
+  elsif bac >= 0.09 and bac < 0.20
+    puts "At this BAC, you are experiencing anger or sadness, boisterousness, and decreased libido. Reflexes and motor control are impaired. Slurred speech is possible."
+  elsif bac >= 0.20
+    puts "At this BAC, you are experiencing stupor, loss of understanding, and impaired sensations. Loss of consciousness and memory blackout are possible. Don't drink more!"
+  end
+  puts "\n"
+end
 
 commit_file = ARGV[0]
 message = File.read(commit_file).strip
@@ -98,19 +119,23 @@ message = File.read(commit_file).strip
 case mode
 when "normal"
   if bac > NORMAL
-    puts "You are too drunk"
+    puts "I'm sorry Dave, I can't let you do that...you're too drunk."
+    puts "COMMIT ABORTED"
     exit 1
   else 
-    puts "You are sober. Good job"
+    puts "You are sober. Good job!"
+    puts "COMMIT SUCCESS"
     exit 0
   end
 when "krunk"
   if bac < NORMAL
-    puts "You are not drunk enough"
+    puts "Sorry, you still have #{NORMAL - bac}%BAC to go until you're properly drunk..."
+    puts "COMMIT ABORTED"
     exit 1
   else
     client = Tumblr::Client.new
-    puts "You are drunk! Good job"
+    puts "You are drunk! Good job."
+    puts "COMMIT SUCCESS"
     name = `git config user.name`
     now = DateTime.now
     date = now.strftime("%B %e, %l:%M%p")
