@@ -16,6 +16,8 @@ gitdown has three modes of operation:
 
 In Krunk mode and Baller mode, gitdown will mangle your commit messages to make them appear more intoxicated, and will also post your name, current BAC, and the commit message to the official [gitdown Tumblr](http://gitdownhackny.tumblr.com), with a silly related photo attached.
 
+When the "verbose" configuration parameter is turned on as described below, gitdown also gives you helpful facts about your current level of impairment, based on your BAC.
+
 Usage
 -----
 First, clone the repo and install necessary gems:
@@ -31,7 +33,7 @@ To use the script as a hook for the gitdown repo itself, copy it to the proper l
 Using this project requires an Arduino Uno with the [DrinkShield](http://www.gfxhax.com/drinkshield/) attachment. Open the `arduino_gitdown/arduino_gitdown.ino` file with the Arduino IDE and load it onto the Arduino.
 
 Then, open the `.gitdown` config file and edit the three configuration parameters:
-- __mode__: This should be set to either "normal", "krunk", or "baller", corresponding to the modes described below.
+- __mode__: This should be set to either "normal", "krunk", or "baller", corresponding to the modes described above.
 - __port__: This should be the device name of the Arduino's USB connection on your machine. This can be found from the Arduino IDE's "Serial Port" Menu. The default value is `/dev/tty.usbmodem1421`, which happened to work on the Macbook Air used for development.
 - __verbose__: Set to "true" or "false", depending on whether you want the system to output helpful information about your current BAC level.
 
