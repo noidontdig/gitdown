@@ -1,8 +1,20 @@
 gitdown
 =======
-__gitdown__ is a git hook which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://www.gfxhax.com/drinkshield/) for Arduino as a breathalyzer.
+__gitdown__ is a script which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://www.gfxhax.com/drinkshield/) for Arduino as a breathalyzer, and a Ruby script as the git hook.
 
-It was built for hackNY spring 2013 by Alex Qin and Geoffrey Litt, and won first place there. 
+It was built for hackNY's spring 2013 hackathon by Alex Qin (@alexqin) and Geoffrey Litt (@geoffreylitt), and won first place there. 
+ 
+You can watch a demo video of gitdown in action at [this Youtube link](http://www.youtube.com/watch?v=NnBb1wmHj5k).
+
+Modes
+------
+gitdown has three modes of operation:
+
+- __Normal mode__: Only lets you commit with a BAC of less than 0.05%.
+- __Krunk mode__: Only lets you commit with a BAC of _greater_ than 0.05%.
+- __Ball(m)er mode__: Only lets you commit with a BAC of [between 0.13% and 0.15%](http://xkcd.com/323/).
+
+In Krunk mode and Baller mode, gitdown will mangle your commit messages to make them appear more intoxicated, and will also post your name, current BAC, and the commit message to the official [gitdown Tumblr](http://gitdownhackny.tumblr.com), with a silly related photo attached.
 
 Usage
 -----
@@ -32,8 +44,3 @@ Depending on the active mode and your BAC, the script will either permit you to 
 
 If you want to actually use gitdown in another repository, copy the `commit-msg` script to that repo's `.git/hooks` directory, and make sure to copy the `.gitdown` config file to that repository as well.
 
-Modes
-------
-- __Normal mode__: Only lets you commit with a BAC of less than 0.05%.
-- __Krunk mode__: Only lets you commit with a BAC of __greater__ than 0.05%.
-- __Ball(m)er mode__: Only lets you commit with a BAC of [between 0.13% and 0.15%](http://xkcd.com/323/).
