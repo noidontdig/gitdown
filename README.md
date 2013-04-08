@@ -1,7 +1,7 @@
 gitdown
 =======
 
-![example of gitdown aborting a commit](http://www.evernote.com/shard/s36/sh/1ff80994-e1f9-49ae-a5d0-4be3a8cec71a/25bde2f60f30b833c703f05ab636fa2b/deep/0/Screenshot%204/8/13%207:45%20AM.jpg)
+![example of gitdown aborting a commit](http://geoffreylitt.com/files/gitdown-screenshot.png)
 
 __gitdown__ is a script which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://www.gfxhax.com/drinkshield/) for Arduino as a breathalyzer, and a Ruby script as the git hook.
 
