@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Gitdown by noidontdig</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Gitdown</h1>
+          <h2>Don't commit when you're drunk</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/noidontdig/gitdown/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/noidontdig/gitdown/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/noidontdig/gitdown" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>gitdown</h1>
+
+<p><img src="http://geoffreylitt.com/files/gitdown-screenshot.png" alt="example of gitdown aborting a commit"></p>
+
+<p><strong>gitdown</strong> is a script which moderates your git committing activity based on your blood alcohol content (BAC). It uses the <a href="http://www.gfxhax.com/drinkshield/">DrinkShield</a> for Arduino as a breathalyzer, and a Ruby script as the git hook.</p>
+
+<p>It was built for hackNY's spring 2013 hackathon by Alex Qin (<a href="https://github.com/alexqin" class="user-mention">@alexqin</a>) and Geoffrey Litt (<a href="https://github.com/geoffreylitt" class="user-mention">@geoffreylitt</a>), and won first place there. </p>
+
+<p>You can watch a demo video of gitdown in action at <a href="http://www.youtube.com/watch?v=NnBb1wmHj5k">this Youtube link</a>.</p>
+
+<h2>Modes</h2>
+
+<p>gitdown has three modes of operation:</p>
+
+<ul>
+<li>
+<strong>Normal mode</strong>: Only lets you commit with a BAC of less than 0.05%.</li>
+<li>
+<strong>Krunk mode</strong>: Only lets you commit with a BAC of <em>greater</em> than 0.05%.</li>
+<li>
+<strong>Ball(m)er mode</strong>: Only lets you commit with a BAC of <a href="http://xkcd.com/323/">between 0.13% and 0.15%</a>.</li>
+</ul><p>In Krunk mode and Baller mode, gitdown will mangle your commit messages to make them appear more intoxicated, and will also post your name, current BAC, and the commit message to the official <a href="http://gitdownhackny.tumblr.com">gitdown Tumblr</a>, with a silly related photo attached.</p>
+
+<p>When the "verbose" configuration parameter is turned on as described below, gitdown also gives you helpful facts about your current level of impairment, based on your BAC.</p>
+
+<h2>Usage</h2>
+
+<p>First, clone the repo and install necessary gems:</p>
+
+<pre><code>git clone https://github.com/noidontdig/gitdown.git
+cd gitdown
+bundle install
+</code></pre>
+
+<p>To use the script as a hook for the gitdown repo itself, copy it to the proper location:</p>
+
+<pre><code>cp commit-msg .git/hooks/
+</code></pre>
+
+<p>Using this project requires an Arduino Uno with the <a href="http://www.gfxhax.com/drinkshield/">DrinkShield</a> attachment. Open the <code>arduino_gitdown/arduino_gitdown.ino</code> file with the Arduino IDE and load it onto the Arduino.</p>
+
+<p>Then, open the <code>.gitdown</code> config file and edit the three configuration parameters:</p>
+
+<ul>
+<li>
+<strong>mode</strong>: This should be set to either "normal", "krunk", or "baller", corresponding to the modes described above.</li>
+<li>
+<strong>port</strong>: This should be the device name of the Arduino's USB connection on your machine. This can be found from the Arduino IDE's "Serial Port" Menu. The default value is <code>/dev/tty.usbmodem1421</code>, which happened to work on the Macbook Air used for development.</li>
+<li>
+<strong>verbose</strong>: Set to "true" or "false", depending on whether you want the system to output helpful information about your current BAC level.</li>
+</ul><p>Then, you can try editing a file in the gitdown repo and committing the change, to see the script in action.</p>
+
+<pre><code>echo "random change" &gt;&gt; commit-msg
+git commit -a -m "messing up the repo"
+</code></pre>
+
+<p>Depending on the active mode and your BAC, the script will either permit you to or prevent you from committing!</p>
+
+<p>If you want to actually use gitdown in another repository, copy the <code>commit-msg</code> script to that repo's <code>.git/hooks</code> directory, and make sure to copy the <code>.gitdown</code> config file to that repository as well.</p>
+        </section>
+
+        <footer>
+          Gitdown is maintained by <a href="https://github.com/noidontdig">noidontdig</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
