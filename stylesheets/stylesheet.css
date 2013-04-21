@@ -82,6 +82,11 @@ header h2 {
   color: #aaa;
   font-weight: normal;
   line-height: 1.3;
+  text-align: center;
+}
+
+section img {
+  width: 620px;
 }
 
 #container {
