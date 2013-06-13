@@ -2,7 +2,7 @@
 #
 # Git hook for breathalyzing before commmitting
 
-require "serialport"
+require 'serialport'
 require 'io/console'
 require 'tumblr_client'
 
