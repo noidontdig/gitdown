@@ -9,8 +9,8 @@ require 'tumblr_client'
 CONFIG = ".gitdown"
 
 NORMAL = 0.05
-BALLMER_MIN = 0.13
-BALLMER_MAX = 0.15
+BALLMER_MIN = 0.129
+BALLMER_MAX = 0.138
 
 mode_descriptions = {"normal" => "You best not be tipsy. Not even one bit.", 
                      "krunk" => "If you ain't WASTED, you ain't COMMITTIN'",
