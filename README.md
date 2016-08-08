@@ -3,7 +3,7 @@ gitdown
 
 ![example of gitdown aborting a commit](http://geoffreylitt.com/files/gitdown-screenshot.png)
 
-__gitdown__ is a script which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://www.gfxhax.com/drinkshield/) for Arduino as a breathalyzer, and a Ruby script as the git hook.
+__gitdown__ is a script which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://shieldlist.org/gfxhax/drinkshield) for Arduino as a breathalyzer, and a Ruby script as the git hook.
 
 It was built for hackNY's spring 2013 hackathon by Alex Qin (@alexqin) and Geoffrey Litt (@geoffreylitt), and won first place there. 
  
@@ -33,7 +33,7 @@ To use the script as a hook for the gitdown repo itself, copy it to the proper l
 
     cp commit-msg .git/hooks/
 
-Using this project requires an Arduino Uno with the [DrinkShield](http://www.gfxhax.com/drinkshield/) attachment. Open the `arduino_gitdown/arduino_gitdown.ino` file with the Arduino IDE and load it onto the Arduino.
+Using this project requires an Arduino Uno with the [DrinkShield](http://shieldlist.org/gfxhax/drinkshield) attachment. Open the `arduino_gitdown/arduino_gitdown.ino` file with the Arduino IDE and load it onto the Arduino.
 
 Then, open the `.gitdown` config file and edit the three configuration parameters:
 - __mode__: This should be set to either "normal", "krunk", or "baller", corresponding to the modes described above.
