@@ -3,7 +3,7 @@ gitdown
 
 ![example of gitdown aborting a commit](http://geoffreylitt.com/files/gitdown-screenshot.png)
 
-__gitdown__ is a script which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://www.gfxhax.com/drinkshield/) for Arduino as a breathalyzer, and a Ruby script as the git hook.
+__gitdown__ is a script which moderates your git committing activity based on your blood alcohol content (BAC). It uses the [DrinkShield](http://shieldlist.org/gfxhax/drinkshield) for Arduino as a breathalyzer, and a Ruby script as the git hook.
 
 It was built for hackNY's spring 2013 hackathon by Alex Qin (@alexqin) and Geoffrey Litt (@geoffreylitt), and won first place there. 
  
